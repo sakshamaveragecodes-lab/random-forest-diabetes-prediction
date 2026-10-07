@@ -1,0 +1,53 @@
+RANDOM FOREST PROJECT - VIVA QUICK NOTES
+========================================
+
+Q1. What is the aim of this project?
+A. To predict whether a patient belongs to the diabetes or non-diabetes class using a Random Forest classifier trained on the Pima Indians Diabetes dataset.
+
+Q2. Why is this a classification problem?
+A. The target, Outcome, has two discrete classes: 0 for no diabetes and 1 for diabetes.
+
+Q3. How many records and features are used?
+A. There are 768 records, 8 predictor features and 1 target column.
+
+Q4. Why were some zero values treated as missing?
+A. Zero is not a plausible measurement for Glucose, BloodPressure, SkinThickness, Insulin or BMI in this dataset, so those zeros were treated as missing and median-imputed.
+
+Q5. Why was median imputation used?
+A. The median is robust to skewed values and outliers and works well for numeric clinical measurements. It was placed inside the sklearn Pipeline to avoid data leakage.
+
+Q6. Was categorical encoding required?
+A. No. Every predictor is numeric and the target is already encoded as 0/1.
+
+Q7. What train-test split was used?
+A. 80% training and 20% testing with stratification and random_state=42. That produced 614 training rows and 154 testing rows.
+
+Q8. What is Random Forest?
+A. Random Forest is an ensemble method that trains many decision trees on bootstrapped samples and random feature subsets, then combines their predictions. This generally reduces variance compared with one decision tree.
+
+Q9. Why was hyperparameter tuning used?
+A. GridSearchCV was used to choose better Random Forest settings systematically rather than selecting them arbitrarily.
+
+Q10. What was the best tuned configuration?
+A. n_estimators=300, max_depth=8, min_samples_leaf=2, max_features='sqrt', min_samples_split=2, random_state=42.
+
+Q11. What validation method was used during tuning?
+A. Stratified 5-fold cross-validation, scored using ROC-AUC.
+
+Q12. What were the final test metrics?
+A. Accuracy 75.32%, Precision 69.05%, Recall 53.70%, F1-Score 60.42%, and ROC-AUC 81.04%.
+
+Q13. What does the confusion matrix show?
+A. TN=87, FP=13, FN=25 and TP=29 on the test set.
+
+Q14. Which feature was most important?
+A. Glucose, with about 31.77% of the model's feature importance, followed by BMI and Age.
+
+Q15. What is the key limitation?
+A. Recall for the diabetes class is 53.70%, meaning some positive cases are missed. The model is an educational demonstration and must not be used as a clinical diagnostic tool.
+
+Q16. Why use multiple evaluation metrics instead of accuracy alone?
+A. Accuracy summarizes overall correctness, while precision, recall and F1 specifically describe performance on the positive class. ROC-AUC measures ranking/discrimination across thresholds.
+
+Q17. What bonus work was completed?
+A. Hyperparameter tuning, cross-validation, feature-importance visualization, confusion-matrix and ROC visualizations, and model saving with Joblib.
